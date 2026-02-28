@@ -11,10 +11,6 @@
     
     <!-- 发布构建时生成客户端文件 -->
     <!-- https://fast-endpoints.com/docs/swagger-support#save-to-disk-with-app-run -->
-    <Target Name="ClientGen" AfterTargets="Build" Condition="'$(Configuration)'=='Release'">
-        <Exec WorkingDirectory="$(RunWorkingDirectory)"
-              Command="$(RunCommand) --generateclients true"/>
-    </Target>
     
     <ItemGroup>
         <PackageReference Include="FastEndpoints" Version="7.1.1" />
