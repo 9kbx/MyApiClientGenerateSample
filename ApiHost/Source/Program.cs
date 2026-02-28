@@ -1,3 +1,6 @@
+using FastEndpoints.ClientGen.Kiota;
+using Kiota.Builder;
+
 var bld = WebApplication.CreateBuilder(args);
 bld.Services
    .AddAuthenticationJwtBearer(s => s.SigningKey = bld.Configuration["Auth:JwtKey"])
@@ -11,6 +14,11 @@ bld.Services
        // 您可以通过以下方式将其更改为仅使用类名称：
        // 注意：同名DTO类会以数字结尾命名，比如: ProductDto 和 ProductDto2
        o.ShortSchemaNames = true;
+       
+       o.DocumentSettings = s =>
+       {
+           s.DocumentName = "v1"; //must match what's being passed in to the map method below
+       };
    });
 
 bld.Services.AddCors(options =>
@@ -51,4 +59,41 @@ app.UseAuthentication()
        };
    })
    .UseSwaggerGen(uiConfig: u => u.ShowOperationIDs()); // 在 Swagger UI 中显示OperationID
+
+// 创建客户端代码生成端点（访问此端点可下载打包好的客户带代码）
+app.MapApiClientEndpoint("/cs-client", c =>
+    {
+        c.SwaggerDocumentName = "v1"; //must match document name set above
+        c.Language = GenerationLanguage.CSharp;
+        c.ClientNamespaceName = "MyCompanyName";
+        c.ClientClassName = "MyCsClient";
+    },
+    o => //endpoint customization settings
+    {
+        o.CacheOutput(p => p.Expire(TimeSpan.FromSeconds(1))); //cache the zip
+        o.ExcludeFromDescription();                           //hides this endpoint from swagger docs
+    });
+
+// 实现命令行生成客户端代码
+await app.GenerateApiClientsAndExitAsync(
+    c =>
+    {
+        c.SwaggerDocumentName = "v1"; //must match doc name above
+        c.Language = GenerationLanguage.CSharp;
+        c.OutputPath = Path.Combine(app.Environment.WebRootPath, "ApiClients", "CSharp");
+        c.ClientNamespaceName = "MyCompanyName";
+        c.ClientClassName = "MyCsClient";
+        c.CreateZipArchive = true; //if you'd like a zip file as well
+    }
+    // ,
+    // c =>
+    // {
+    //     c.SwaggerDocumentName = "v1";
+    //     c.Language = GenerationLanguage.TypeScript;
+    //     c.OutputPath = Path.Combine(app.Environment.WebRootPath, "ApiClients", "Typescript");
+    //     c.ClientNamespaceName = "MyCompanyName";
+    //     c.ClientClassName = "MyTsClient";
+    // }
+    );
+
 app.Run();

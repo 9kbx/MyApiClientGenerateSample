@@ -20,6 +20,8 @@ sealed class ListProductEndpoint()
 
         if (!string.IsNullOrEmpty(r.Name))
             products = Products.Where(p => p.Name.Contains(r.Name)).ToList();
+        else
+            products = Products;
 
         await Send.OkAsync(products.AsResponseData(), c);
     }
