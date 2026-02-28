@@ -10,7 +10,7 @@ sealed class CreateProductEndpoint()
         Post("product/create");
         Description(x =>
                 x.AutoTagOverride("Product")
-                 .WithName("Create") // 自定义OpratorId，生成api客户端时方法名此名称为准
+                 .WithName("Create") // 自定义operation ID，生成api客户端时方法名此名称为准
         );
         AllowAnonymous();
     }

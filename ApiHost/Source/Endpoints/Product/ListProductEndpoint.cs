@@ -8,7 +8,7 @@ sealed class ListProductEndpoint()
         Get("product/list");
         Description(x =>
                 x.AutoTagOverride("Product")
-                 .WithName("List") // 自定义OpratorId，生成api客户端时方法名此名称为准
+                 .WithName("List") // 自定义operation ID，生成api客户端时方法名此名称为准
         );
         AllowAnonymous();
     }
