@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive , onMounted} from 'vue';
 import { productApi, helloApi } from './api';
+import { ProductApi } from './api/generated';
 
 // 1. 定义表单数据模型
 const createProductForm = reactive({
@@ -14,7 +15,7 @@ const helloResult = ref<any>(null);
 
 onMounted(async () => {
   try {
-    const { data } = await helloApi.sayHelloEndpoint({request:{
+    const { data } = await helloApi.hello({request:{
       firstName: "John",
       lastName: "Doe111"
     }});
@@ -23,6 +24,14 @@ onMounted(async () => {
   } catch (err: any) {
     console.log("SayHello 失败！", err);
   }
+
+  const proApi = new ProductApi();
+  proApi.listProduct().then(res => {
+    console.log("ListProducts 成功！", res.data);
+  }).catch(err => {
+    console.log("ListProducts 失败！", err);
+  });
+
 });
 
 // 创建商品
@@ -37,7 +46,7 @@ const onSubmit = async () => {
 
   try {
     // 调用生成的 ProductApi
-    const { data } = await productApi.create({
+    const { data } = await productApi.createProduct({
       createProductRequest: {
         name: createProductForm.name,
         code: createProductForm.code
