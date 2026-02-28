@@ -1,16 +1,15 @@
-namespace MyApiClientGenerateSample.Endpoints.Product;
+namespace MyApiClientGenerateSample.Endpoints.Category;
 
 sealed class ListProductEndpoint()
     : Endpoint<ListProductRequest, ResponseData<List<ProductDto>>>
 {
     public override void Configure()
     {
-        Get("list");
-        Group<ProductEndpointGroup>();
-        // Description(x =>
-        //         x.AutoTagOverride("Product")
-        //          .WithName("ProductList") // 自定义operation ID，生成api客户端时方法名此名称为准
-        // );
+        Get("category/list");
+        Description(x =>
+                x.AutoTagOverride("Category")
+                 .WithName("CategoryProductList") // 自定义operation ID，生成api客户端时方法名此名称为准
+        );
         AllowAnonymous();
     }
 
@@ -26,11 +25,11 @@ sealed class ListProductEndpoint()
 
     static List<ProductDto> Products =
     [
-        new(1, "product1", "p1"),
-        new(2, "product2", "p2"),
-        new(3, "product3", "p3"),
-        new(4, "product4", "p4"),
-        new(5, "product5", "p5"),
+        new(1, "product1", "p1", DateTimeOffset.UtcNow),
+        new(2, "product2", "p2", DateTimeOffset.UtcNow),
+        new(3, "product3", "p3", DateTimeOffset.UtcNow),
+        new(4, "product4", "p4", DateTimeOffset.UtcNow),
+        new(5, "product5", "p5", DateTimeOffset.UtcNow),
     ];
 }
 

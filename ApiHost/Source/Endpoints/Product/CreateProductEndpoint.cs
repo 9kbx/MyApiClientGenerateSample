@@ -7,11 +7,13 @@ sealed class CreateProductEndpoint()
 {
     public override void Configure()
     {
-        Post("product/create");
-        Description(x =>
-                x.AutoTagOverride("Product")
-                 .WithName("Create") // 自定义operation ID，生成api客户端时方法名此名称为准
-        );
+        Post("create");
+        Group<ProductEndpointGroup>();
+        // Description(x => x.WithName("Create"));
+        // Description(x =>
+        //         x.AutoTagOverride("Product")
+        //          .WithName("Create") // 自定义operation ID，生成api客户端时方法名此名称为准
+        // );
         AllowAnonymous();
     }
 
