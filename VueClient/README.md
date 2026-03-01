@@ -21,6 +21,14 @@ npm install axios
 openapi-generator generate \
   -i http://localhost:5000/swagger/v1/swagger.json \
   -g typescript-axios \
-  -o ./VueClient/src/api/generated \
+  -o ./src/api/v1 \
   --additional-properties=useSingleRequestParameter=true,withInterfaces=true
+
+
+openapi-generator generate \
+  -i http://localhost:5000/swagger/v2/swagger.json \
+  -g typescript-axios \
+  -o ./src/api/v2 \
+  --additional-properties=useSingleRequestParameter=true,withInterfaces=true
+
 ```

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive , onMounted} from 'vue';
-import { productApi, helloApi } from './api';
-import { ProductApi } from './api/generated';
+import { productApi, helloApi , v1, v2} from './api';
+import { ProductApi } from './api/v1';
 
 // 1. 定义表单数据模型
 const createProductForm = reactive({
@@ -32,6 +32,23 @@ onMounted(async () => {
     console.log("ListProducts 失败！", err);
   });
 
+  // query product v1
+  v1.product.getProduct({
+    productId:1111
+  }).then(res => {
+    console.log("getProductV1 成功！", res.data);
+  }).catch(err => {
+    console.log("getProductV1 失败！", err);
+  });
+
+  // query product v2
+  v2.product.getProductV2({
+    productId:2222
+  }).then(res => {
+    console.log("getProductV2 成功！", res.data);
+  }).catch(err => {
+    console.log("getProductV2 失败！", err);
+  });
 });
 
 // 创建商品

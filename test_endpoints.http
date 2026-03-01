@@ -1,0 +1,93 @@
+@host = http://localhost:5000/api
+
+### User Endpoints (v1)
+
+# Get User
+GET {{host}}/v1/user/123
+Accept: application/json
+
+###
+
+# List Users
+GET {{host}}/v1/user/list
+Accept: application/json
+
+###
+
+# Create User
+POST {{host}}/v1/user/create
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe"
+}
+
+###
+
+# Delete User
+DELETE {{host}}/v1/user/123
+Accept: application/json
+
+###
+
+# Update User
+POST {{host}}/v1/user/update/123
+Content-Type: application/json
+
+{
+  "firstName": "Jane",
+  "lastName": "Doe"
+}
+
+### Category Endpoints (v1)
+
+# Delete Category
+DELETE {{host}}/v1/category/456
+Accept: application/json
+
+###
+
+# List Category Products
+GET {{host}}/v1/category/list?name=product
+Accept: application/json
+
+### Product Endpoints
+
+# Get Product (v1)
+GET {{host}}/v1/product/1
+Accept: application/json
+
+###
+
+# Get Product (v2)
+GET {{host}}/v2/product/1
+Accept: application/json
+
+###
+
+# List Products (v1)
+GET {{host}}/v1/product/list?name=product
+Accept: application/json
+
+###
+
+# Create Product (v1)
+POST {{host}}/v1/product/create
+Content-Type: application/json
+
+{
+  "name": "New Product",
+  "code": "NP001"
+}
+
+###
+
+# Update Product (v1)
+POST {{host}}/v1/product/1
+Content-Type: application/json
+
+{
+  "name": "Updated Product",
+  "code": "UP001"
+}

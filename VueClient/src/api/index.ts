@@ -1,7 +1,9 @@
 // src/api/index.ts
 //import axios from "axios";
 import axios, { type AxiosResponse, type AxiosError } from "axios";
-import { ProductApi, HelloApi, Configuration } from "./generated";
+// 1. 使用命名空间导入，彻底解决重名冲突
+import * as ApiV1 from "./v1";
+import * as ApiV2 from "./v2";
 
 // 1. 创建 Axios 实例
 const axiosInstance = axios.create({
@@ -44,9 +46,31 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-// 2. 配置
-const config = new Configuration();
+// 2. 分别创建各版本的配置实例
+// 如果两个版本的 basePath 不同，可以在此处区分
+const configV1 = new ApiV1.Configuration();
+const configV2 = new ApiV2.Configuration();
 
-// 3. 导出实例
-export const productApi = new ProductApi(config, config.basePath, axiosInstance);
-export const helloApi = new HelloApi(config, config.basePath, axiosInstance);
+// // 3. 导出实例
+// export const productApi = new ProductApi(config, config.basePath, axiosInstance);
+// export const helloApi = new HelloApi(config, config.basePath, axiosInstance);
+
+// 3. 导出 V1 实例
+export const v1 = {
+    product: new ApiV1.ProductApi(configV1, configV1.basePath, axiosInstance),
+    hello: new ApiV1.HelloApi(configV1, configV1.basePath, axiosInstance),
+};
+
+// 4. 导出 V2 实例 (假设 V2 有新的 ProductApi 或其他)
+export const v2 = {
+    product: new ApiV2.ProductApi(configV2, configV2.basePath, axiosInstance),
+    // 如果 V2 有新增的接口类，在这里添加
+    // order: new ApiV2.OrderApi(configV2, configV2.basePath, axiosInstance),
+};
+
+// 5. 为了兼容旧代码，可以保留原有的导出作为快捷方式（默认指向 V1）
+export const productApi = v1.product;
+export const helloApi = v1.hello;
+
+// 6. 导出类型定义（可选，方便在组件中使用类型）
+export { ApiV1, ApiV2 };

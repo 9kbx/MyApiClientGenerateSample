@@ -1,4 +1,5 @@
-src/api/generated
+src/api/v1
+src/api/v2
 
 # Logs
 logs
