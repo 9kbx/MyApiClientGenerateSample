@@ -55,22 +55,22 @@ const configV2 = new ApiV2.Configuration();
 // export const productApi = new ProductApi(config, config.basePath, axiosInstance);
 // export const helloApi = new HelloApi(config, config.basePath, axiosInstance);
 
-// 3. 导出 V1 实例
-export const v1 = {
-    product: new ApiV1.ProductApi(configV1, configV1.basePath, axiosInstance),
-    hello: new ApiV1.HelloApi(configV1, configV1.basePath, axiosInstance),
+// 3. 导出 API 实例
+export const api = {
+    // V1 命名空间
+    v1: {
+        product: new ApiV1.ProductApi(configV1, configV1.basePath, axiosInstance),
+        hello: new ApiV1.HelloApi(configV1, configV1.basePath, axiosInstance),
+        // 如果 V1 还有其他 API 类，继续在这里添加
+    },
+
+    // V2 命名空间
+    v2: {
+        product: new ApiV2.ProductApi(configV2, configV2.basePath, axiosInstance),
+        // 假设 V2 新增了一个订单接口
+        // order: new ApiV2.OrderApi(configV2, configV2.basePath, axiosInstance),
+    }
 };
 
-// 4. 导出 V2 实例 (假设 V2 有新的 ProductApi 或其他)
-export const v2 = {
-    product: new ApiV2.ProductApi(configV2, configV2.basePath, axiosInstance),
-    // 如果 V2 有新增的接口类，在这里添加
-    // order: new ApiV2.OrderApi(configV2, configV2.basePath, axiosInstance),
-};
-
-// 5. 为了兼容旧代码，可以保留原有的导出作为快捷方式（默认指向 V1）
-export const productApi = v1.product;
-export const helloApi = v1.hello;
-
-// 6. 导出类型定义（可选，方便在组件中使用类型）
+// 导出类型定义（可选，方便在组件中使用类型）
 export { ApiV1, ApiV2 };

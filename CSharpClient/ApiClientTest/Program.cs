@@ -22,7 +22,7 @@ var client = new MyCsClient(adapter);
 
     var userId = "abc112233";
 
-    var res = await client.Api.User[userId].GetAsync();;
+    var res = await client.Api.V1.User[userId].GetAsync();;
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
 }
@@ -32,7 +32,7 @@ var client = new MyCsClient(adapter);
 
     var userId = "abc112233";
 
-    var res = await client.Api.User[userId].GetAsync();;
+    var res = await client.Api.V2.User[userId].GetAsync();;
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
 }
@@ -41,7 +41,7 @@ var client = new MyCsClient(adapter);
 {
     Console.WriteLine("============= get 请求，路由参数 /api/product/{productId:int} ==================");
     var productId = 123;
-    var product = await client.Api.Product[productId].GetAsync();
+    var product = await client.Api.V2.Product[productId].GetAsync();
     Console.WriteLine(JsonSerializer.Serialize(product));
     Console.WriteLine();
 }
@@ -52,7 +52,7 @@ var client = new MyCsClient(adapter);
 
     var likeProductName = "1";
 
-    var res = await client.Api.Product.List.GetAsync(c => { c.QueryParameters.Name = likeProductName; });
+    var res = await client.Api.V1.Product.List.GetAsync(c => { c.QueryParameters.Name = likeProductName; });
 
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
@@ -69,7 +69,7 @@ var client = new MyCsClient(adapter);
         Code = "ip20"
     };
 
-    var res = await client.Api.Product.Create.PostAsync(request);
+    var res = await client.Api.V1.Product.Create.PostAsync(request);
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
 }
@@ -85,7 +85,7 @@ var client = new MyCsClient(adapter);
         Code = "ip200"
     };
 
-    var res = await client.Api.Product[productId].PostAsync(request);
+    var res = await client.Api.V1.Product[productId].PostAsync(request);
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
 }
@@ -101,7 +101,7 @@ var client = new MyCsClient(adapter);
         LastName = "ip200"
     };
 
-    var res = await client.Api.User.Update[userId].PostAsync(request);
+    var res = await client.Api.V1.User.Update[userId].PostAsync(request);
     Console.WriteLine(JsonSerializer.Serialize(res));
     Console.WriteLine();
 }

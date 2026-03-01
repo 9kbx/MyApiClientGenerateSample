@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gen:api": "npm run gen:v1 && npm run gen:v2",
+    "gen:v1": "openapi-generator generate -i http://localhost:5000/swagger/v1/swagger.json -g typescript-axios -o ./src/api/v1 --additional-properties=useSingleRequestParameter=true,withInterfaces=true,supportsES6=true",
+    "gen:v2": "openapi-generator generate -i http://localhost:5000/swagger/v2/swagger.json -g typescript-axios -o ./src/api/v2 --additional-properties=useSingleRequestParameter=true,withInterfaces=true,supportsES6=true"
   },
   "dependencies": {
     "axios": "^1.13.6",
